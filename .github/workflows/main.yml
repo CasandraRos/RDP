@@ -29,5 +29,13 @@ jobs:
 
       - name: Create ngrok TCP Tunnel
         run: |
-          .\ngrok\ngrok.exe tcp 3389 || exit 1
+          .\ngrok\ngrok.exe tcp 3389
+        continue-on-error: true
+
+      - name: Check ngrok Tunnel Status
+        run: |
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Failed to start ngrok tunnel."
+            exit 1
+          }
  
